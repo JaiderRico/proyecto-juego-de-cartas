@@ -1,0 +1,3 @@
+roclass Carta(){
+    
+}
