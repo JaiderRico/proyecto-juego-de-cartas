@@ -1,11 +1,19 @@
-#include "Jugador.h"
+#ifndef RONDA_H
+#define RONDA_H
+
 #include <vector>
-class Ronda{
-    public:
-        vector<Jugador*> Jugadores;
-        jugadorinicial = 0;
+#include "Jugador.h"
+#include "Carta.h"
+using namespace std;
 
-        int GanadorRonda();
+class Ronda {
+public:
+    vector<Jugador*> jugadores;
+    Carta cartaInicial;
+    Jugador* ganador;
 
-    
-}
+    Ronda(vector<Jugador*>& jugadores, Carta cartaInicial);
+    void jugarTurno();
+};
+
+#endif

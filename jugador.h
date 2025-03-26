@@ -1,14 +1,21 @@
-#include "carta.h"
-#include <vector>
-class Jugador{
-    public:
-        string nombre;
-        vector<Carta> mano;
-        int acopmulador;
-        Jugador(string nom : string nombre(nom)){}
+#ifndef JUGADOR_H
+#define JUGADOR_H
 
-        Carta tirar_carta(int i){
-            return mano[i]
-        };
-        
-}
+#include <vector>
+#include "Carta.h"
+using namespace std;
+
+class Jugador {
+public:
+    string nombre;
+    vector<Carta> mano;
+    int acumulador = 0;
+
+
+    Jugador(string nom);
+
+    void agregarCarta(Carta carta);
+    Carta jugarCarta(int indice);
+};
+
+#endif

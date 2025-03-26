@@ -1,15 +1,23 @@
+#ifndef JUEGO_H
+#define JUEGO_H
+
 #include <vector>
-#include "carta.h"
-#include "jugador.h"
+#include <string>
+#include "Jugador.h"
+#include "Carta.h"
+using namespace std;
 
-class Juego{
-    public:
-        vector<Jugador> Jugadores;
-        vector<Carta> mazo;
-    
-        Juego(vector<string> nombres);
+class Juego {
+public:
+    vector<Jugador> jugadores; 
+    vector<Carta> mazo;
 
-        void generarmazo();
-        void repartir();
-        void genganador();
-}
+    Juego(vector<string> nombres);
+
+    void generarMazo();
+    void repartirCartas();
+    void jugar();
+    void determinarGanador();
+};
+
+#endif
