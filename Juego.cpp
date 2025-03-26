@@ -1,21 +1,4 @@
 #include "Juego.h"
-
-Juego::Juego(vector<string> nombres)
-{
-}
-
-void Juego::generarmazo()
-{
-}
-
-void Juego::repartir()
-{
-}
-
-void Juego::getganador()
-{
-}
-#include "Juego.h"
 #include "Ronda.h"
 #include <iostream>
 #include <algorithm>
@@ -34,7 +17,7 @@ Juego::Juego(vector<string> nombres) {
 void Juego::generarMazo() {
     vector<string> colores = {"Rojo", "Azul", "Verde", "Amarillo"};
     srand(time(0));
-    for(int i = 0; i < 9; i++ ){
+    for(int i = 0; i < 8; i++ ){
        mazo.push_back(Carta(i,"a"));
        for(int j = 0; j < 4; j++){
         mazo.push_back(Carta(i,colores[j]));
@@ -54,8 +37,8 @@ void Juego::repartirCartas() {
 void Juego::jugar() {
 
     int rondas = jugadores[0].mano.size();
-    for (int indiceInicio = 0; indiceInicio < rondas; i++) {
-        cout << "===== Ronda " << i + 1 << " =====" << endl;
+    for (int indiceInicio = 0; indiceInicio < rondas; indiceInicio++) {
+        cout << "===== Ronda " << indiceInicio + 1 << " =====" << endl;
         Jugador* jugadorInicio = &jugadores[indiceInicio];
         Carta cartaInicial;
         if (!jugadorInicio->mano.empty()) {

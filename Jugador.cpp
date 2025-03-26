@@ -7,3 +7,6 @@ Carta Jugador::jugarCarta(int indice) {
     mano.erase(mano.begin() + indice);
     return carta;
 }
+void Jugador::agregarCarta(Carta carta) {
+    mano.push_back(carta);
+}
