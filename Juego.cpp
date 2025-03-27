@@ -1,5 +1,6 @@
 #include "Juego.h"
 #include "Ronda.h"
+#include "Carta.h"
 #include <iostream>
 #include <algorithm>
 #include <cstdlib>
@@ -18,7 +19,6 @@ void Juego::generarMazo() {
     vector<string> colores = {"Rojo", "Azul", "Verde", "Amarillo"};
     srand(time(0));
     for(int i = 0; i < 8; i++ ){
-       mazo.push_back(Carta(i,"a"));
        for(int j = 0; j < 4; j++){
         mazo.push_back(Carta(i,colores[j]));
         }; 
@@ -36,10 +36,10 @@ void Juego::repartirCartas() {
 
 void Juego::jugar() {
 
-    int rondas = jugadores[0].mano.size();
-    for (int indiceInicio = 0; indiceInicio < rondas; indiceInicio++) {
-        cout << "===== Ronda " << indiceInicio + 1 << " =====" << endl;
-        Jugador* jugadorInicio = &jugadores[indiceInicio];
+    int rondas = mazo.size() / jugadores.size();
+    for (int i = 0; i < rondas; i++) {
+        cout << "===== Ronda " << i + 1 << " =====" << endl;
+        Jugador* jugadorInicio = &jugadores[i % jugadores.size()];
         Carta cartaInicial;
         if (!jugadorInicio->mano.empty()) {
             cout << "\n" << jugadorInicio->nombre << ", es tu turno para iniciar la ronda." << endl;
@@ -56,15 +56,11 @@ void Juego::jugar() {
                 cin >> id;
             }
             cartaInicial = jugadorInicio->jugarCarta(id);
-        } else {
-            continue;
         }
-
         vector<Jugador*> jugadoresPtr;
         int total = jugadores.size();
         for (int j = 0; j < total; j++) {
-            int id = (indiceInicio + j) % total;
-            jugadoresPtr.push_back(&jugadores[id]);
+            jugadoresPtr.push_back(&jugadores[j]);
         }
 
         Ronda ronda(jugadoresPtr, cartaInicial);
