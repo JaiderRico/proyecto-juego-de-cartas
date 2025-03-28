@@ -13,4 +13,4 @@ Este es un juego de cartas basado en C++ en el que dos jugadores compiten entre 
 - Librerías: `<iostream>`, `<vector>`, `<algorithm>`, `<cstdlib>`, `<ctime>`  
 
 ## UML
-(./imagenes/UML.png)
+! [uml](./imagenes/UML.png)
