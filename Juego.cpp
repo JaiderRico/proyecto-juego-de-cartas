@@ -33,45 +33,65 @@ void Juego::repartirCartas() {
         jugadores[i % numJugadores].agregarCarta(mazo[i]);
     }
 }
-
 void Juego::jugar() {
-
-    int rondas = mazo.size() / jugadores.size();
-    for (int i = 0; i < rondas; i++) {
-        cout << "===== Ronda " << i + 1 << " =====" << endl;
-        Jugador* jugadorInicio = &jugadores[i % jugadores.size()];
-        Carta cartaInicial;
-        if (!jugadorInicio->mano.empty()) {
-            cout << "\n" << jugadorInicio->nombre << ", es tu turno para iniciar la ronda." << endl;
-            cout << "Tu mano:" << endl;
-            for (int j = 0; j < jugadorInicio->mano.size(); j++) {
-                cout << j << ": " << jugadorInicio->mano[j].numero << " " 
-                     << jugadorInicio->mano[j].color << endl;
-            }
-            int id;
-            cout << "Elige el índice de la carta a jugar como carta inicial: ";
-            cin >> id;
-            while(id < 0 || id >= (int)jugadorInicio->mano.size()) { // esto "||" funciona como un operador logico or 
-                cout << "Índice inválido. Intenta de nuevo: ";
-                cin >> id;
-            }
-            cartaInicial = jugadorInicio->jugarCarta(id);
+    Jugador* jugadorActual = &jugadores[0];
+    
+    while (!jugadores[0].mano.empty()) {
+        cout << "===== Nueva Ronda =====" << endl;
+        
+        cout << "\n" << jugadorActual->nombre << ", es tu turno." << endl;
+        cout << "Tu mano:" << endl;
+        for (int j = 0; j < jugadorActual->mano.size(); j++) {
+            cout << j << ": " << jugadorActual->mano[j].numero << " " 
+                 << jugadorActual->mano[j].color << endl;
         }
-        vector<Jugador*> jugadoresPtr;
-        int total = jugadores.size();
-        for (int j = 0; j < total; j++) {
-            jugadoresPtr.push_back(&jugadores[j]);
+        
+        int id;
+        cout << "Elige el índice de la carta a jugar: ";
+        cin >> id;
+        
+        Carta cartaInicial = jugadorActual->jugarCarta(id); 
+        if (jugadorActual != &jugadores[0]){
+            segundoJugador = jugadores[0];
+        }else{
+            segundoJugador = jugadores[1];
         }
+        cout << "\n" << segundoJugador->nombre << ", es tu turno." << endl;
+        cout << "Tu mano:" << endl;
+        for (int j = 0; j < segundoJugador->mano.size(); j++) {
+            cout << j << ": " << segundoJugador->mano[j].numero << " " 
+                 << segundoJugador->mano[j].color << endl;
+        }
+        
+        cout << "Elige el índice de la carta a jugar: ";
+        cin >> id;
+        
+        Carta cartaSegunda = segundoJugador->jugarCarta(id);
+        
+        if (cartaInicial.color != cartaSegunda.color){
+            jugadorActual.acumulador += 2;
+        }else { if(cartaInicial.numero> cartaSegunda.numero){
+                    jugadorActual.acumulador += 2;
+                }else{ if(cartaInicial.numero < cartaSegunda.numero){
+                    segundoJugador.acumulador += 2;
+                    }else{
+                        segundoJugador.acumulador += 2;
+                    }
+                }
 
-        Ronda ronda(jugadoresPtr, cartaInicial);
-        ronda.jugarTurno();
+        }
     }
+
     determinarGanador();
 }
 
 void Juego::determinarGanador() {
-    auto it = max_element(jugadores.begin(), jugadores.end(),
-        [](Jugador a, Jugador b) { return a.acumulador < b.acumulador; });
-    cout << "===== Ganador final: " << it->nombre << " con " 
-         << it->acumulador << " cartas acumuladas! =====" << endl;
+        if (jugadores[i].acumulador > jugadores[i+1].acumulador){
+            cout << "===== Ganador final: " << jugadores[i].nombre << " con " 
+            << jugadores[i].acumulador << " cartas acumuladas! =====" << endl;
+        }else{
+            cout << "===== Ganador final: " << jugadores[i+1].nombre << " con " 
+            << jugadores[i+1].acumulador << " cartas acumuladas! =====" << endl;
+        }
+
 }
